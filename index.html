@@ -3,23 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snakeoilcartel.net - Semi -Under Construction</title>
+  <title>snakeoilcartel.net - Modern Landing Page</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 100px;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #121212;
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background-color: #1e1e1e;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
     }
     h1 {
-      color: #4f51d9;
+      color: #f0f0f0;
+      margin-bottom: 20px;
     }
     p {
-      font-size: 20px;
-      color: #5e5c03;
+      color: #bbbbbb;
+      margin-bottom: 20px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #555;
+      border-radius: 5px;
+      font-size: 16px;
+      background-color: #2a2a2a;
+      color: #f0f0f0;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #7f7f7f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #5d5d5d;
     }
   </style>
 </head>
 <body>
-  <h1>Snakeoilcartel.net is Under Construction</h1>
+  <div class="container">
+    <h1>snakeoilcartel.net</h1>
+    <p>Join our mailing list to stay updated on the latest developments.</p>
+    <form id="contactForm">
+      <input type="text" id="name" name="name" placeholder="Your Name" required>
+      <input type="email" id="email" name="email" placeholder="Your Email" required>
+      <input type="tel" id="phone" name="phone" placeholder="Your Phone Number" required>
+      <button type="submit">Subscribe</button>
+    </form>
+  </div>
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      alert('Thank you for subscribing to snakeoilcartel.net!');
+      this.reset();
+    });
+  </script>
 </body>
 </html>
