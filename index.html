@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>snakeoilcartel.net - Modern Landing Page</title>
+  <title>snakeoilcartel.net</title>
   <style>
     body {
       margin: 0;
@@ -73,8 +73,29 @@
   <script>
     document.getElementById('contactForm').addEventListener('submit', function(event) {
       event.preventDefault();
+
+      const formData = new FormData(this);
+      const data = {};
+      formData.forEach((value, key) => data[key] = value);
+
+      fetch('https://purple-mouse-20ee.r-morrill-ca-me.workers.dev/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => {
+        if (response.ok) {
       alert('Thank you for subscribing to snakeoilcartel.net!');
       this.reset();
+        } else {
+          alert('There was an error submitting your subscription. Please try again later.');
+        }
+      })
+      .catch(error => {
+        alert('There was an error submitting your subscription. Please try again later.');
+    });
     });
   </script>
 </body>
