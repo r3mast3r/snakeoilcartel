@@ -1,26 +1,42 @@
-export default {
-  async fetch(request, env, ctx) {
+// worker.js
+
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  // Only handle POST requests
+  if (request.method === 'POST') {
     try {
-      // Check if the request method is POST
-      if (request.method === "POST") {
-        // Parse the JSON body
-        const data = await request.json();
-        
-        // Extract the key and value from the JSON data
-        const key = data.name; // Assuming the input name is "key"
-        const value = data.phone; // Assuming the input name is "value"
+      // Parse the request body as JSON
+      const body = await request.json();
 
-        // Store the key-value pair in the environment variable
-        await env.snakeoilcartel.put(key, value);
+      // Extract name and phone number from the form data
+      const { name, phone } = body;
 
-        return new Response("Successful write", {
-          status: 2, // Changed from 201 to 2 for the response status
-        });
-      } else {
-        return new Response("Method Not Allowed", { status: 405 });
-      }
-    } catch (e) {
-      return new Response(e.message, { status: 500 });
+      // Get the KV namespace for subscriber data
+    const kv = await KVNamespace.get('snakeoilcartel');
+
+      // Store the subscriber information in the KV namespace
+    await kv.put(name, phone);
+
+      // Return a success response
+    return new Response(JSON.stringify({ status: 'success' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+    } catch (error) {
+      // Handle any errors that occurred during processing
+      return new Response(JSON.stringify({ status: 'error', message: 'Failed to process request' }), {
+        status: 500,
+    headers: { 'Content-Type': 'application/json' }
+  });
     }
-  },
-};
+  }
+
+  // For other request types, return a simple response
+  return new Response(JSON.stringify({ status: 'success' }), {
+    status: 200,
+    headers: { 'Content-Type': 'application/json' }
+  });
+}
